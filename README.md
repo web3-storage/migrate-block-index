@@ -31,23 +31,6 @@ $ ./cli.js src-table-name dest-table-name
 
 This will be used to migrate indexes from the `blocks` table to the `blocks-cars-position` table.
 
-1 dynamo write costs 5x a read, so try to reduce writes!
-
-- If we have or can derive a car cid key
-  - if exists in dest table
-    - **skip!**
-  - else
-    - If the old key exists:
-       - **skip!**
-    - else
-      - **write car cid key**
-- else
-  - If the old key exists:
-       - **skip!**
-    - else
-      - **write old style key** (as it's all we have)
-
-
 ### Source table scan cost
 
 `blocks` table stats
@@ -74,6 +57,24 @@ Assuming we have to write 1 new record for every source record
 - 858 million / 3 items per WCU = 286 million WCUs
 - 286 * $1.25 per million = **$357.5 total write cost**
 
+
+### Reducing writes
+
+1 dynamo write costs > 5x a read, so try to reduce writes!
+
+- If we have or can derive a car cid key
+  - if exists in dest table
+    - **skip!**
+  - else
+    - If the old key exists:
+       - **skip!**
+    - else
+      - **write car cid key**
+- else
+  - If the old key exists:
+       - **skip!**
+    - else
+      - **write old style key** (as it's all we have)
 
 ### References
 
