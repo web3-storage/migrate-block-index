@@ -1,0 +1,22 @@
+{
+  "prod-ep-v1-blocks-cars-position": {
+    "Keys": [
+      {
+        "blockmultihash": {
+          "S": "z2Drjgb6bW26vwjB44f8gHTeFUKFUofvRVxHerEWp7txxxxxxxx"
+        },
+        "carpath": {
+          "S": "region/bucket/raw/QmXLdJm1icGsm8PYtfUPHpXbZdWQRWZcmSQyLixxxxxxxx/3153187342xxxxxxxx/ciqhzffo5jf6ei5spizagdqyegetvxj35rxfkadhwgastaqxxxxxxxx.car"
+        }
+      },
+      {
+        "blockmultihash": {
+          "S": "nope"
+        },
+        "carpath": {
+          "S": "region/bucket/raw/QmXLdJm1icGsm8PYtfUPHpXbZdWQRWZcmSQyLixxxxxxxx/3153187342xxxxxxxx/ciqhzffo5jf6ei5spizagdqyegetvxj35rxfkadhwgastaqxxxxxxxx.car"
+        }
+      }
+    ]
+  }
+}

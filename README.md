@@ -20,33 +20,38 @@ You will need:
 - `node` v18
 - aws credentials exported in env vars
 
-run `cli.js`
+There are two phases: find and transform the indexes, and, write them to destination.
 
+run `cli.js` to find and transform the set of indexes that exist in the source table but not in the destination. 
+
+This will write write `migrate-block-index-<totalSegments>-<currentSegment>.ndjson` files to disk with just the subset of indexes that need to be written to the destination table.
+
+```sh
+$ ./cli.js src-table-name dest-table-name 859 0
+# writes missing indexes to migrate-block-index-859-000.ndjson
 ```
-$ ./cli.js src-table-name dest-table-name
-ℹ Migrating: src-table-name -> dest-table-name
+
+run `write-cli.js` to write indexes from a file to the destination table.
+
+```sh
+$ ./write-cli.js migrate-block-index dest-table-name 859 0
+# migrate-block-index-859-000.ndjson -> dest-table-name
+```
+
+### Concurrency
+
+Each command takes a `totalSegments` and `segment` arg which is used to split up the initial table scan into `totalSegment` partitions. Use `parallel` to manage concurrency e.g
+
+```sh
+# runs 859 jobs from 0 to 858, default parallelization = cpu threads
+seq 0 858 | parallel ./cli.js blocks prod-ep-v1-blocks-cars-position 859 {1}
 ```
 
 ## Migration details
 
 This will be used to migrate indexes from the `blocks` table to the `blocks-cars-position` table.
 
-1 dynamo write costs 5x a read, so try to reduce writes!
-
-- If we have or can derive a car cid key
-  - if exists in dest table
-    - **skip!**
-  - else
-    - If the old key exists:
-       - **skip!**
-    - else
-      - **write car cid key**
-- else
-  - If the old key exists:
-       - **skip!**
-    - else
-      - **write old style key** (as it's all we have)
-
+1 dynamo write costs more than 5x a read, so try to reduce writes!
 
 ### Source table scan cost
 
@@ -85,3 +90,7 @@ Assuming we have to write 1 new record for every source record
 >
 > Write consumption: Measured in 1KB increments (also rounded up!) for each write operation. This is the size of the item you're writing / updating / deleting during a write operation... if you write a single 7.5KB item in DynamoDB, you will consume 8 WCUs (7.5 / 1 == 7.5, rounded up to 8).
 – https://www.alexdebrie.com/posts/dynamodb-costs/
+
+> If a ConditionExpression evaluates to false during a conditional write, DynamoDB still consumes write capacity from the table. The amount consumed is dependent on the size of the item (whether it’s an existing item in the table or a new one you are attempting to create or update). For example, if an existing item is 300kb and the new item you are trying to create or update is 310kb, the write capacity units consumed will be the 310kb item.
+– https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.ConditionalUpdate
+
