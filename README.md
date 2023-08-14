@@ -11,8 +11,6 @@ to:
 { blockmultihash: string, carPath: string, length: number, offset: number }
 ```
 
-Upgrades the carPath key to `${carCid}/${carCid}.car` style where the source key is prefixed with `/raw` and the source bucket is `dotstorage-prod-*`
-
 ## Getting started
 
 You will need:
