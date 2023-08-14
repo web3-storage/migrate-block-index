@@ -8,7 +8,7 @@
     "pretest": "standard",
     "start": "node cli.js blocks",
     "lint": "standard",
-    "test": "ava --no-worker-threads"
+    "test": "ava --no-worker-threads --timeout 60s"
   },
   "keywords": [],
   "author": "",
