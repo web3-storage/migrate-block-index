@@ -1,0 +1,21 @@
+{
+  "Responses": {
+      "prod-ep-v1-blocks-cars-position": [
+          {
+              "blockmultihash": {
+                  "S": "z2Drjgb6bW26vwjB44f8gHTeFUKFUofvRVxHerEWp7twXxxxxxx"
+              },
+              "offset": {
+                  "N": "3317501"
+              },
+              "length": {
+                  "N": "2765"
+              },
+              "carpath": {
+                  "S": "region/bucket/raw/QmXLdJm1icGsm8PYtfUPHpXbZdWQRWZcmSQyLixxxxxxxx/3153187342xxxxxxxx/ciqhzffo5jf6ei5spizagdqyegetvxj35rxfkadhwgastaqxxxxxxxx.car"
+              }
+          }
+      ]
+  },
+  "UnprocessedKeys": {}
+}
