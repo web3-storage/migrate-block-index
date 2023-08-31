@@ -22,7 +22,7 @@ There are two phases: find and transform the indexes, and, write them to destina
 
 run `cli.js` to find and transform the set of indexes that exist in the source table but not in the destination. 
 
-This will write write `migrate-block-index-<totalSegments>-<currentSegment>.ndjson` files to disk with just the subset of indexes that need to be written to the destination table.
+This will write `migrate-block-index-<totalSegments>-<currentSegment>.ndjson` files to disk with just the subset of indexes that need to be written to the destination table.
 
 ```sh
 $ ./cli.js src-table-name dest-table-name 859 0
