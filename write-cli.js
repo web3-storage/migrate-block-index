@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { createDynamo, createDynamoTable } from './test/_helpers.js'
 import { write } from './write.js'
