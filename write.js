@@ -36,14 +36,21 @@ export async function write (srcStream, dst, segment, totalSegments, client = ne
         srcCount += batch.length
         spinner.suffixText = `src: ${srcCount} dst: ${dstCount}`
 
+        // remove duplicates
+        const itemMap = new Map()
+        for (const item of batch) {
+          itemMap.set(`${item.blockmultihash}#${item.carpath}`, item)
+        }
+
         /** @type {Array<import('@aws-sdk/client-dynamodb').PutRequest} */
-        const puts = batch.map(item => {
+        const puts = Array.from(itemMap.values()).map(item => {
           return {
             PutRequest: {
               Item: marshall(item)
             }
           }
         })
+
         const cmd = new BatchWriteItemCommand({
           RequestItems: {
             [dst]: puts
