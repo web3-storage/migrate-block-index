@@ -77,6 +77,17 @@ Assuming we have to write 1 new record for every source record
 - 858 million / 3 items per WCU = 286 million WCUs
 - 286 * $1.25 per million = **$357.5 total write cost**
 
+### Throughput
+
+Scanning ~1M rows and checking if they exist = 100min = 10k per min
+859 batches = 1,718hr = 71 days
+
+1 batch = 800MB down 300MB up (~2MB/s down at 10 workers)
+
+max sst "job" length = 8hrs
+
+~10k rows per minute, 15mins lambda runtime.
+
 
 ### References
 

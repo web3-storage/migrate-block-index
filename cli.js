@@ -11,7 +11,7 @@ const segment = parseInt(process.argv.at(5) ?? exit('plz pass segment'))
 const client = new DynamoDBClient()
 
 const spinner = ora({
-  text: `Migrating: ${src} -> ${dst}`
+  text: `Scanning: ${src} -> ${dst} (migrate-block-index-${totalSegments}-${segment})`
 }).start()
 
 // await migrate(src, dst, client, spinner)
